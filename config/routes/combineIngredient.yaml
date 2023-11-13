@@ -1,0 +1,4 @@
+test_request:
+    path: /api/combineIngredient
+    controller: App\Controller\CombineIngredientController::get
+    methods: [GET]

@@ -1,0 +1,18 @@
+imports:
+    - { resource: 'Domain/*.php' }
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    # UseCase
+    UseCase\:
+        resource: '../../core/src/UseCase/*'
+        lazy: true
+
+    # Persistence
+    Persistence\:
+        resource: '../../core/src/Persistence/*'
+        lazy: true

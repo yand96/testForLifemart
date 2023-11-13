@@ -1,0 +1,40 @@
+version: '3'
+
+volumes:
+  dbforlifemart:
+
+networks:
+  common:
+    external: true
+    name: common
+
+services:
+
+  php:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - "${ROOT_DIRECTORY:?Unspecified ROOT_DIRECTORY variable}/api:/usr/src/myapp/api"
+      - "${ROOT_DIRECTORY:?Unspecified ROOT_DIRECTORY variable}/config:/usr/src/myapp/config"
+      - "${ROOT_DIRECTORY:?Unspecified ROOT_DIRECTORY variable}/vendor:/usr/src/myapp/vendor"
+      - "${ROOT_DIRECTORY:?Unspecified ROOT_DIRECTORY variable}/core:/usr/src/myapp/core"
+    container_name: "web-php-lifemart"
+    restart: unless-stopped
+    networks:
+      common:
+    ports:
+      - "8080:8080"
+
+  mysql:
+    image: mysql:8.0.29
+    container_name: "db-lifemart"
+    networks:
+      common:
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - dbforlifemart:/mysql.sql
+    ports:
+      - "3306:3306"
+
